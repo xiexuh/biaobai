@@ -1,0 +1,207 @@
+/* ==================== 全局样式重置 ==================== */
+/* 重置所有元素的内外边距，使用border-box盒模型，设置默认字体 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* 确保padding和border不增加元素实际宽度 */
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif; /* 中文字体栈 */
+}
+
+/* ==================== 页面主体样式 ==================== */
+/* 设置全屏背景图片，营造冬日氛围 */
+body {
+    background-image: url(images/download1.jpg); /* 冬日背景图路径 */
+    background-size: cover; /* 背景图覆盖整个屏幕 */
+    background-clip: content-box; /* 背景裁剪到内容区域 */
+    min-height: 100vh; /* 确保body至少占满整个视口高度 */
+    overflow: hidden; /* 隐藏页面滚动条 */
+    position: relative; /* 为绝对定位的遮罩层提供参照 */
+}
+
+/* ==================== 背景遮罩样式 ==================== */
+/* 黑色半透明遮罩层，增强文字可读性 */
+.background-overlay {
+    position: fixed; /* 固定定位，覆盖整个视口 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.600); /* 黑色半透明，30%透明度 */
+    z-index: 1; /* 在背景之上，文字之下 */
+    pointer-events: none; /* 防止遮罩层拦截鼠标事件 */
+    backdrop-filter: blur(2px); /* 轻微模糊效果，增强氛围感 */
+}
+
+/* 新的跳转按钮样式 - 灰色发光效果 */
+.new-jump-btn {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7); /* 灰色文字 */
+    background: transparent;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: block;
+    margin: 15px auto;
+    text-align: center;
+    font-family: inherit;
+}
+
+.new-jump-btn:hover {
+    color: white; /* 悬停时变为白色 */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* 白色发光效果 */
+    opacity: 1;
+}
+/* ==================== 飘字容器样式 ==================== */
+/* 作为所有飘字的父容器，占据整个视口 */
+.float-text-container {
+    position: relative; /* 相对定位，为绝对定位的飘字提供参照 */
+    width: 100vw; /* 100%视口宽度 */
+    height: 100vh; /* 100%视口高度 */
+    overflow: hidden; /* 隐藏超出容器的内容 */
+    z-index: 2; /* 确保飘字在遮罩层之上 */
+}
+
+/* ==================== 飘字元素基础样式 ==================== */
+/* 单个飘字的基本样式 */
+.float-text {
+    position: absolute; /* 绝对定位，自由飘落 */
+    top: -50px; /* 初始位置在容器上方50px处 */
+    color: #fff; /* 默认白色文字 */
+    font-weight: 500; /* 中等字体粗细 */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* 白色发光效果 */
+    pointer-events: none; /* 防止文字遮挡鼠标事件 */
+    z-index: 10; /* 确保飘字在背景之上 */
+    opacity: 0; /* 初始完全透明 */
+    /* 绑定飘落动画，保持结束状态 */
+    animation: floatDown linear forwards;
+}
+
+/* 添加新的飘字层级，增加视觉效果 */
+.float-text.fast {
+    animation-duration: 6s !important; /* 更快的飘落速度 */
+    opacity: 0.7; /* 稍微透明一点，增加层次感 */
+    z-index: 9; /* 在慢速文字后面 */
+}
+
+.float-text.slow {
+    animation-duration: 20s !important; /* 更慢的飘落速度 */
+    opacity: 0.9; /* 更不透明 */
+    z-index: 11; /* 在快速文字前面 */
+}
+
+/* ==================== 飘落动画定义 ==================== */
+/* 核心飘落动画：下落+左右偏移+透明度渐变 */
+@keyframes floatDown {
+    0% {
+        transform: translateY(0) translateX(0) rotate(0deg); /* 起始位置 */
+        opacity: 0; /* 完全透明 */
+    }
+    10% {
+        opacity: 0.8; /* 快速变为不透明 */
+    }
+    90% {
+        opacity: 0.8; /* 保持不透明直到最后 */
+    }
+    100% {
+        transform: translateY(100vh) translateX(var(--random-x, 50px)) rotate(var(--random-rotate, 0deg)); /* 下落至视口底部，随机偏移和旋转 */
+        opacity: 0; /* 结束时淡出 */
+    }
+}
+
+/* 添加轻微旋转动画，增加自然感 */
+@keyframes gentleRotate {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(var(--rotate-amount, 2deg)); }
+    100% { transform: rotate(0deg); }
+}
+
+/* ==================== 音乐控制按钮样式 ==================== */
+/* 固定在右下角的圆形音乐控制按钮 */
+.music-btn {
+    position: fixed; /* 固定定位，不随页面滚动 */
+    bottom: 20px; /* 距离底部20px */
+    right: 20px; /* 距离右侧20px */
+    width: 50px; /* 按钮宽度 */
+    height: 50px; /* 按钮高度 */
+    background-color: rgba(255, 255, 255, 0.2); /* 半透明白色背景 */
+    border-radius: 50%; /* 圆形按钮 */
+    display: flex; /* 使用弹性布局 */
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+    cursor: pointer; /* 鼠标悬停变为手形 */
+    z-index: 100; /* 确保按钮在最上层 */
+    backdrop-filter: blur(5px); /* 背景模糊效果 */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* 半透明边框 */
+    transition: all 0.3s ease; /* 平滑过渡效果 */
+    /* 移除 display: none; 现在通过内联样式控制显示/隐藏 */
+}
+
+/* 音乐按钮悬停效果 */
+.music-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3); /* 悬停时背景更亮 */
+    transform: scale(1.1); /* 悬停时放大10% */
+}
+
+/* 音乐按钮内的图标样式 */
+.music-btn span {
+    font-size: 24px; /* 图标大小 */
+    color: white; /* 图标颜色 */
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* 图标阴影 */
+}
+
+/* ==================== 音乐静音提示样式 ==================== */
+/* 静音状态下的提示文字 */
+.music-btn .mute-hint {
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.music-btn:hover .mute-hint {
+    opacity: 1;
+}
+
+/* ==================== 音频播放器隐藏 ==================== */
+/* 隐藏原生audio元素，使用自定义按钮控制 */
+audio {
+    display: none; /* 完全隐藏 */
+}
+
+/* ==================== 音乐播放状态指示器 ==================== */
+/* 当音乐播放时，按钮右上角显示绿色圆点 */
+.music-btn.playing::after {
+    content: ""; /* 伪元素内容为空 */
+    position: absolute; /* 绝对定位 */
+    width: 8px; /* 圆点宽度 */
+    height: 8px; /* 圆点高度 */
+    background-color: #4CAF50; /* 绿色圆点 */
+    border-radius: 50%; /* 圆形 */
+    top: 5px; /* 距离顶部5px */
+    right: 5px; /* 距离右侧5px */
+}
+
+/* ==================== 欢迎页面按钮样式 ==================== */
+/* 当鼠标悬停在开始按钮上时 */
+#startBtn:hover {
+    background: #45a049 !important; /* 加深背景色 */
+    transform: translateY(-2px) !important; /* 轻微上浮效果 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4) !important; /* 增强阴影 */
+}
+
+/* 当鼠标按下开始按钮时 */
+#startBtn:active {
+    transform: translateY(1px) !important; /* 按下效果 */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3) !important; /* 减小阴影 */
+}

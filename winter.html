@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>冬日满屏飘字</title>
+    <link rel="stylesheet" href="winter.css">
+</head>
+<body>
+    <!-- 欢迎页面 -->
+    <div id="welcomePage" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0); z-index:1000; display:flex; flex-direction:column; justify-content:center; align-items:center; color:white;">
+		<!-- 标题 -->
+        <h2 style="font-size: 2.5rem; margin-bottom: 20px; text-shadow: 0 0 10px rgba(255,255,255,0.5);">冬日情书 · 飘雪传情</h2><br>
+		<!-- 副标题 -->
+		 <p style="font-size: 1.2rem; margin-bottom: 40px; opacity: 0.9; text-align:center; max-width: 80%;">每一片雪花，都承载着心意</p>
+		<!-- 按钮 -->
+        <button id="startBtn" style="padding:15px 40px; font-size:1.3rem; margin-top:20px; background:#4CAF50; color:white; border:none; border-radius:10px; cursor:pointer; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">进入冬日世界</button>
+    </div>
+
+    <!-- 黑色半透明背景遮罩 -->
+    <div class="background-overlay" id="backgroundOverlay"></div>
+
+    <!-- 飘字容器 -->
+    <div class="float-text-container" id="container"></div>
+    
+    <!-- 音乐播放控件 -->
+    <div class="music-control">
+        <audio id="bgMusic" src="audio/music.mp3" loop></audio>
+    </div>
+    
+    <!-- 音乐控制按钮 - 默认隐藏 -->
+    <div class="music-btn" id="musicBtn" style="display: none;">
+        <span>🔇</span>
+    </div>
+
+    <!-- JS放在body末尾，确保DOM加载完成 -->
+    <script src="winter.js"></script>
+	<!-- 使用UTF-８ -->
+    <script src="winter.js" charset="UTF-8"></script>
+</body>
+</html>
